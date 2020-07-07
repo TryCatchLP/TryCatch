@@ -84,8 +84,8 @@ t_RLLAVE = r'\}'
 t_DOT = r'\.'
 t_SEMICOLON= r';'
 t_DECIMAL = r'\d*\.\d+f'
-t_SSTRING = r'\'.*\''
-t_DSTRING = r'".*"'
+t_SSTRING = r'\'[^\'.]*\''
+t_DSTRING = r'"[^".]*"'
 t_INTEGER = r'\d+'
 t_TRUE = r'true'
 t_FALSE = r'false'
@@ -125,7 +125,7 @@ def analizar(cadena):
         print(tok)
 
 #========================Steven Araujo=============================
-cadena1 = 'var tupla = ("Steven", "Araujo");\nConsole.WriteLine(tupla.Item1);'
+cadena1 = "var tupla = ('Steven', 'Araujo');\nConsole.WriteLine(tupla.Item1);"
 cadena2 = 'string nombre_completo = "Steven Araujo";\nstring apellido = nombre_completo.Substring(7, 6);\nConsole.WriteLine(apellido);'
 cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
 print(cadena1)
@@ -138,3 +138,17 @@ print(cadena3)
 analizar(cadena3)
 print(20*"-")
 
+#========================Kenny Camba=============================
+print()
+cadena1 = "float salario = 350.5f;\nvar porcentaje = 25;\nfloat total = salario*porcentaje/100;"
+cadena2 = 'Console.WriteLine("Tabla del 2:");\nfor(var i=0; i<20; i++){\n\tConsole.WriteLine(2 * i);\n}'
+cadena3 = 'Console.WriteLine("Ingrese usuario: ");\nstring usuario = Console.ReadLine();\nif(usuario != "Admin"){\n\tConsole.WriteLine("No autorizado!!");\n}'
+print(cadena1)
+analizar(cadena1)
+print(20*"-")
+print(cadena2)
+analizar(cadena2)
+print(20*"-")
+print(cadena3)
+analizar(cadena3)
+print(20*"-")
