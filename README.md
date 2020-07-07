@@ -46,8 +46,8 @@
 8. . (K)
 
 ## Entrada y Salida
-1. Console.WriteLine() 
-2. Console.ReadLine()
+1. Console.WriteLine() (S)
+2. Console.ReadLine() (S)
 
 ## Estructuras de control
 1. for (K)
