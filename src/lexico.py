@@ -114,14 +114,27 @@ def t_newline(t):
 
 lex.lex()
 
-"""
-cadena = 'var casa == a + "hola" - (15.5f + .01f) && . >< for while'
-analizador = lex.lex()
-analizador.input(cadena1)
+def analizar(cadena):
+    analizador = lex.lex()
+    analizador.input(cadena)
 
-while True:
-    tok = analizador.token()
-    if not tok:
-        break
-    print(tok)
-"""
+    while True:
+        tok = analizador.token()
+        if not tok:
+            break
+        print(tok)
+
+#========================Steven Araujo=============================
+cadena1 = 'var tupla = ("Steven", "Araujo");\nConsole.WriteLine(tupla.Item1);'
+cadena2 = 'string nombre_completo = "Steven Araujo";\nstring apellido = nombre_completo.Substring(7, 6);\nConsole.WriteLine(apellido);'
+cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
+print(cadena1)
+analizar(cadena1)
+print(20*"-")
+print(cadena2)
+analizar(cadena2)
+print(20*"-")
+print(cadena3)
+analizar(cadena3)
+print(20*"-")
+
