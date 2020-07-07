@@ -2,7 +2,7 @@
 
 ## Tipos de datos
 1. int (Y)
-2. float
+2. float (S)
 3. bool (Y)
 4. string (K)
 5. var (K)
@@ -13,24 +13,24 @@
 3. Comillas simples (K)
 4. Comillas dobles (K)
 5. true (Y)
-6. false
+6. false (S)
 
 ## Operaciones matemáticas
 1. \+ (K)
 2. \- (K)
 3. \* (Y)
-4. /  
+4. /  (S)
 5. = (Y)
-6. ++
-7. --
+6. ++ (S)
+7. -- (S)
 
 ## Operaciones de comparación
 1. \> (K)
 2. < (K)
 3. == (K)
-4. !
+4. ! (S)
 5. != (Y)
-6. \>=
+6. \>= (S)
 7. <= (Y)
 7. && (K)
 8. || (Y)
@@ -41,8 +41,8 @@
 3. ) (K)
 4. [ (Y)
 5. ] (Y)
-6. {
-7. }
+6. { (S)
+7. } (S)
 8. . (K)
 
 ## Entrada y Salida
@@ -60,16 +60,16 @@
 2. HashSet<T> (Y)
 
 ## Especiales
-1. new
+1. new (S)
 2. error (Y)
 3. ID (K)
 4. new line (Y)
 5. ignore (K)
 
 ## Metodos Colecciones
-1. Contains
-2. Replace
-3. Substring
-4. Add 
-5. Remove 
-6. Item
+1. Contains (S)
+2. Replace (S)
+3. Substring (S)
+4. Add (S)
+5. Remove (S)
+6. Item (S)
