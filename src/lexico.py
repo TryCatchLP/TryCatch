@@ -11,7 +11,11 @@ reserved = {
     'if' : 'IF',
     'else': 'ELSE',
     'new': 'NEW',
-    'Console': 'CONSOLE'
+    'Console': 'CONSOLE',
+    'true' : 'TRUE',
+    'false' :'FALSE',
+    'List' : 'LIST',
+    'HashSet' : 'HASHSET'
 }
 
 tokens = [
@@ -44,8 +48,6 @@ tokens = [
     'SSTRING',
     'DSTRING',
     'INTEGER',
-    'TRUE',
-    'FALSE',
     'CONTAINS',
     'REPLACE',
     'SUBSTRING',
@@ -87,8 +89,6 @@ t_DECIMAL = r'\d*\.\d+f'
 t_SSTRING = r'\'[^\'.]*\''
 t_DSTRING = r'"[^".]*"'
 t_INTEGER = r'\d+'
-t_TRUE = r'true'
-t_FALSE = r'false'
 t_CONTAINS = r'\.Contains'
 t_REPLACE = r'\.Replace'
 t_SUBSTRING = r'\.Substring'
@@ -143,6 +143,20 @@ print()
 cadena1 = "float salario = 350.5f;\nvar porcentaje = 25;\nfloat total = salario*porcentaje/100;"
 cadena2 = 'Console.WriteLine("Tabla del 2:");\nfor(var i=0; i<20; i++){\n\tConsole.WriteLine(2 * i);\n}'
 cadena3 = 'Console.WriteLine("Ingrese usuario: ");\nstring usuario = Console.ReadLine();\nif(usuario != "Admin"){\n\tConsole.WriteLine("No autorizado!!");\n}'
+print(cadena1)
+analizar(cadena1)
+print(20*"-")
+print(cadena2)
+analizar(cadena2)
+print(20*"-")
+print(cadena3)
+analizar(cadena3)
+print(20*"-")
+
+#========================Yuleixi Garcia=============================
+cadena1= "List<int> lista = new List<int>();\n lista.Add(456);\nlista.Contains(1);\nlista.Remove(2);"
+cadena2="HashSet<int> set= new HashSet<int>();\nset.Add(456); set.Add(4);"
+cadena3= "bool verdadero=true;\nbool falso=false;\nint num = 3;\nif(verdadero == falso || num <=3){\n     num++; \n} else {\n    verdadero = false; \n}"
 print(cadena1)
 analizar(cadena1)
 print(20*"-")
