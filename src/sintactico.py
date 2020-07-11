@@ -15,34 +15,57 @@ def p_sentencias(p):
     '''sentencias : asignacion
     | imprimir
     | declaracion
+    | if
+    | while
     | condicion'''
 
 def p_imprimir(p):
     'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN SEMICOLON'
 
+"""
+def p_metodos(p):
+    '''metodos : CONTAINS
+        | REPLACE
+        | ADD
+        | REMOVE
+        | ITEM
+        | SUBSTRING
+        | CONSOLE READLINE'''
+"""
 def p_valor(p):
     '''valor : TRUE
         | FALSE
         | SSTRING
         | DSTRING
+        | NEW coleccion LESS tipo GREATER LPAREN RPAREN
         | expresion'''
     
 def p_if(p):
     '''if : IF LPAREN condicion RPAREN LLLAVE sentencias RLLAVE
     | IF LPAREN condicion LPAREN LLLAVE sentencias RLLAVE else'''
+
+#def p_tupla(p):
+#   'tupla : tipo ID TOASSIGN LPAREN contenido  RPAREN SEMICOLON'
+
 # def p_for(p):
-#     'for : FOR condicion LLLAVE sentencias RLLAVE '
-# def p_while(p):
-#     'while : WHILE condicion LLLAVE sentencias RLLAVE '
+#     'for : FOR LPAREN condicion RPAREN LLLAVE sentencias RLLAVE '
+def p_while(p):
+    'while : WHILE condicion LLLAVE sentencias RLLAVE '
+
 def p_else(p):
     'else : ELSE LLLAVE sentencias RLLAVE'
 
 def p_declaracion(p):
+    'declaracion : coleccion LESS tipo GREATER asignacion'
+def p_declaracion(p):
     'declaracion : tipo ID SEMICOLON'
-
 def p_declaracion_ini(p):
     'declaracion : tipo asignacion'
 
+def p_coleccion(p):
+    ''' coleccion : LIST
+        | HASHSET
+    '''
 def p_tipo(p):
     '''tipo : VAR
         | BOOL
@@ -78,7 +101,6 @@ def p_condicion(p):
         | TRUE
         | FALSE
     '''
-
 def p_condicion_oper(p):
     '''condicion : NOT condicion
         | condicion AND condicion
@@ -91,20 +113,11 @@ def p_term_factor(p):
         | DECIMAL
         | ID
     '''
-# def p_factor_num(p):
-#     'factor : INTEGER'
-# def p_factor_var2(p):
-#     'factor : ID'
+
 # def p_float(p):
 #     'factor : FLOAT ID TOASSIGN DECIMAL SEMICOLON'
 # def p_entero(p):
 #     'factor : INT ID TOASSIGN INTEGER SEMICOLON'
-# def p_booleano(p):
-#     '''factor : BOOL ID TOASSIGN TRUE SEMICOLON
-#         | BOOL ID TOASSIGN FALSE SEMICOLON'''
-
-# def p_tupla(p):
-#     'tupla : VAR ID TOASSIGN LPAREN contenido  RPAREN SEMICOLON'
 # def p_contenido(p):
 #     ' contenido : factor COMMA factor'
 
