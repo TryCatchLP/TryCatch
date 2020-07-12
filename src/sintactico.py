@@ -2,21 +2,14 @@ import ply.yacc as sintaxis
 import lexico
 tokens = lexico.tokens
 
-# def p_sentencias(p):
-#     '''sentencias : asignacion
-#     | imprimir
-#     | while
-#     | for
-#     | if 
-#     | tupla
-#     | declaracion'''
-
 def p_sentencias(p):
     '''sentencias : asignacion
     | imprimir
     | declaracion
+    | iter SEMICOLON
     | if
     | while
+    | for
     | condicion'''
 
 def p_imprimir(p):
@@ -38,19 +31,51 @@ def p_valor(p):
         | SSTRING
         | DSTRING
         | NEW coleccion LESS tipo GREATER LPAREN RPAREN
+        | tupla
         | expresion'''
     
 def p_if(p):
     '''if : IF LPAREN condicion RPAREN LLLAVE sentencias RLLAVE
     | IF LPAREN condicion LPAREN LLLAVE sentencias RLLAVE else'''
 
-#def p_tupla(p):
-#   'tupla : tipo ID TOASSIGN LPAREN contenido  RPAREN SEMICOLON'
+def p_tupla(p):
+   'tupla : LPAREN contenido  RPAREN'
 
-# def p_for(p):
-#     'for : FOR LPAREN condicion RPAREN LLLAVE sentencias RLLAVE '
+def p_contenido(p):
+    'contenido : valor'
+
+def p_contenido_item(p):
+    'contenido : ID DOTS valor'
+    
+def p_contenido_coma(p):
+    'contenido : contenido COMMA contenido'
+
+def p_for(p):
+    'for : FOR LPAREN inicio SEMICOLON condicion SEMICOLON iter RPAREN LLLAVE sentencias RLLAVE '
+
+def p_ini_for(p):
+    '''inicio : ID
+        | factor
+    '''
+
+def p_iter(p):
+    '''iter : incremento
+        | decremento
+    '''
+
+def p_incremento(p):
+    '''incremento : INCRE ID
+        | ID INCRE
+        | ID PLUS TOASSIGN term
+    '''
+def p_decremento(p):
+    '''decremento : DECRE ID
+        | ID DECRE
+        | ID MINUS TOASSIGN term
+    '''
+
 def p_while(p):
-    'while : WHILE condicion LLLAVE sentencias RLLAVE '
+    'while : WHILE LPAREN condicion RPAREN LLLAVE sentencias RLLAVE '
 
 def p_else(p):
     'else : ELSE LLLAVE sentencias RLLAVE'
@@ -84,6 +109,8 @@ def p_expresion_producto(p):
     'expresion : expresion BY expresion'
 def p_expresion_division(p):
     'expresion : expresion DIV expresion'
+def p_expresion_iter(p):
+    'expresion : iter'
 def p_expression_term(p):
     'expresion : term'
 
@@ -114,22 +141,14 @@ def p_term_factor(p):
         | ID
     '''
 
-# def p_float(p):
-#     'factor : FLOAT ID TOASSIGN DECIMAL SEMICOLON'
-# def p_entero(p):
-#     'factor : INT ID TOASSIGN INTEGER SEMICOLON'
-# def p_contenido(p):
-#     ' contenido : factor COMMA factor'
-
-"""
-def p_factor_expr(p):
-    'factor : LPAREN expresion RPAREN'
-
-def p_factor_expr_str(p):
-    '''factor : LPAREN SSTRING RPAREN
-              | LPAREN DSTRING RPAREN
+def p_float(p):
+    'factor : FLOAT ID TOASSIGN DECIMAL'
+def p_entero(p):
+    'factor : INT ID TOASSIGN INTEGER'
+def p_var(p):
+    '''factor : VAR ID TOASSIGN INTEGER
+        | VAR ID TOASSIGN DECIMAL
     '''
-"""
 
 # Error generado
 def p_error(p):

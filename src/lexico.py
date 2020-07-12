@@ -42,6 +42,7 @@ tokens = [
     'LLLAVE',
     'RLLAVE',
     'DOT',
+    'DOTS',
     'SEMICOLON',
     'ID',
     'DECIMAL',
@@ -84,6 +85,7 @@ t_RCORCHETE = r'\]'
 t_LLLAVE = r'\{'
 t_RLLAVE = r'\}'
 t_DOT = r'\.'
+t_DOTS = r'\:'
 t_SEMICOLON= r';'
 t_DECIMAL = r'\d*\.\d+f'
 t_SSTRING = r'\'[^\'.]*\''
