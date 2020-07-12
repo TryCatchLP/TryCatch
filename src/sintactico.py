@@ -5,31 +5,27 @@ tokens = lexico.tokens
 def p_sentencias(p):
     '''sentencias : asignacion
     | imprimir
+    | leer
     | declaracion
     | iter SEMICOLON
     | if
     | while
     | for
-    | condicion'''
+    | condicion
+    | metodos'''
 
 def p_imprimir(p):
     'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN SEMICOLON'
+    
 
-"""
-def p_metodos(p):
-    '''metodos : CONTAINS
-        | REPLACE
-        | ADD
-        | REMOVE
-        | ITEM
-        | SUBSTRING
-        | CONSOLE READLINE'''
-"""
+def p_metodos_void(p):
+    '''metodos : remove
+        | add'''
+
 def p_valor(p):
     '''valor : TRUE
         | FALSE
-        | SSTRING
-        | DSTRING
+        | str
         | NEW coleccion LESS tipo GREATER LPAREN RPAREN
         | tupla
         | expresion'''
@@ -80,7 +76,7 @@ def p_while(p):
 def p_else(p):
     'else : ELSE LLLAVE sentencias RLLAVE'
 
-def p_declaracion(p):
+def p_declaracion_coleccion(p):
     'declaracion : coleccion LESS tipo GREATER asignacion'
 def p_declaracion(p):
     'declaracion : tipo ID SEMICOLON'
@@ -109,8 +105,6 @@ def p_expresion_producto(p):
     'expresion : expresion BY expresion'
 def p_expresion_division(p):
     'expresion : expresion DIV expresion'
-def p_expresion_iter(p):
-    'expresion : iter'
 def p_expression_term(p):
     'expresion : term'
 
@@ -139,6 +133,9 @@ def p_term_factor(p):
     '''term : INTEGER
         | DECIMAL
         | ID
+        | nombre
+        | item
+        | indexar
     '''
 
 def p_float(p):
@@ -149,6 +146,50 @@ def p_var(p):
     '''factor : VAR ID TOASSIGN INTEGER
         | VAR ID TOASSIGN DECIMAL
     '''
+
+def p_leer(p):
+    'leer : CONSOLE READLINE LPAREN RPAREN SEMICOLON'
+
+def p_add(p):
+    'add : ID ADD LPAREN valor RPAREN SEMICOLON'
+
+def p_contains(p):
+    '''contains : ID CONTAINS LPAREN valor RPAREN SEMICOLON
+        | string CONTAINS LPAREN string RPAREN
+    '''
+    
+def p_list_remove(p):
+    'remove : ID REMOVE LPAREN valor RPAREN SEMICOLON'
+    
+def p_index_list(p):
+    'indexar : ID LCORCHETE INTEGER RCORCHETE'
+
+def p_index_str(p):
+    'indexar : string LCORCHETE INTEGER RCORCHETE'
+   
+def p_tupla_item(p):
+    'item : ID ITEM'
+
+def p_tupla_item_nombre(p):
+    'nombre : ID DOT ID'
+    
+def p_string(p):
+    '''string : SSTRING
+        | DSTRING
+    '''
+
+def p_string_replace(p):
+    'replace : string REPLACE LPAREN string COMMA string RPAREN'
+
+def p_string_sub(p):
+    'substring : string SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN'
+
+def p_str(p):
+    '''str : replace
+        | contains
+        | substring
+    '''
+
 
 # Error generado
 def p_error(p):
