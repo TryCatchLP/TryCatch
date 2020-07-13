@@ -57,7 +57,9 @@ tokens = [
     'ITEM',
     'COMMA',
     'WRITELINE',
-    'READLINE'
+    'READLINE',
+    'UNION',
+    'GETRANGE'
 
 ] + list(reserved.values())
 
@@ -100,6 +102,8 @@ t_ITEM = r'\.Item[1-9][0-9]*'
 t_COMMA = r'\,'
 t_WRITELINE = r'\.WriteLine'
 t_READLINE = r'\.ReadLine'
+t_UNION=r'\.UnionWith'
+t_GETRANGE=r'\.GetRange'
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'

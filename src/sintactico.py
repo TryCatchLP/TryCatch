@@ -20,13 +20,15 @@ def p_imprimir(p):
 
 def p_metodos_void(p):
     '''metodos : remove
-        | add'''
+        | add
+        | union'''
 
 def p_valor(p):
     '''valor : TRUE
         | FALSE
         | str
         | NEW coleccion LESS tipo GREATER LPAREN RPAREN
+        | ID GETRANGE LPAREN INTEGER COMMA INTEGER RPAREN
         | tupla
         | expresion'''
     
@@ -162,7 +164,11 @@ def p_list_remove(p):
     'remove : ID REMOVE LPAREN valor RPAREN SEMICOLON'
     
 def p_index_list(p):
-    'indexar : ID LCORCHETE INTEGER RCORCHETE'
+    'indexar : ID LCORCHETE INTEGER TOASSIGN RCORCHETE'
+
+
+def p_set_union(p):
+    'union : ID UNION LPAREN ID RPAREN SEMICOLON'
 
 def p_index_str(p):
     'indexar : string LCORCHETE INTEGER RCORCHETE'
