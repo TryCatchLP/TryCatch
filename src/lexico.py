@@ -116,7 +116,7 @@ def t_error(t):
 
 def t_newline(t):
     r'\n+'
-    t.lexer.lineno += len(t.value)
+    t.lexer.lineno += 1
 
 lex.lex()
 
@@ -130,7 +130,7 @@ def analizar(cadena):
             break
         print(tok)
 
-#========================Steven Araujo=============================
+""" #========================Steven Araujo=============================
 cadena1 = "var tupla = ('Steven', 'Araujo');\nConsole.WriteLine(tupla.Item1);"
 cadena2 = 'string nombre_completo = "Steven Araujo";\nstring apellido = nombre_completo.Substring(7, 6);\nConsole.WriteLine(apellido);'
 cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
@@ -172,3 +172,4 @@ print(20*"-")
 print(cadena3)
 analizar(cadena3)
 print(20*"-")
+ """

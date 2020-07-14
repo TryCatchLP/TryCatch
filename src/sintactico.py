@@ -2,6 +2,8 @@ import ply.yacc as sintaxis
 import lexico
 tokens = lexico.tokens
 
+errors = False
+
 def p_sentencias(p):
     '''sentencias : asignacion
     | imprimir
@@ -12,11 +14,16 @@ def p_sentencias(p):
     | while
     | for
     | condicion
-    | metodos'''
+    | metodos
+    | sentencias sentencias'''
 
 def p_imprimir(p):
     'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN SEMICOLON'
-    
+
+def p_imprimir_error(p):
+    'imprimir : CONSOLE WRITELINE error'
+    printerror("Error en WriteLine, sintaxis incorrecta")
+    printhelp("\tConsole.WriteLine(\"!Hola Mundo!\");")
 
 def p_metodos_void(p):
     '''metodos : remove
@@ -27,6 +34,7 @@ def p_valor(p):
     '''valor : TRUE
         | FALSE
         | str
+        | string
         | NEW coleccion LESS tipo GREATER LPAREN RPAREN
         | ID GETRANGE LPAREN INTEGER COMMA INTEGER RPAREN
         | tupla
@@ -35,6 +43,11 @@ def p_valor(p):
 def p_if(p):
     '''if : IF LPAREN condicion RPAREN LLLAVE sentencias RLLAVE
     | IF LPAREN condicion LPAREN LLLAVE sentencias RLLAVE else'''
+
+def p_if_error(p):
+    'if : IF error'
+    printerror("Error en sentencia if")
+    printhelp("\tif(a > b){\n\t\tConsole.WriteLine(\"a es mayor que b\");\n\t}")
 
 def p_tupla(p):
    'tupla : LPAREN contenido  RPAREN'
@@ -99,6 +112,12 @@ def p_tipo(p):
 
 def p_asignacion(p):
     'asignacion : ID TOASSIGN valor SEMICOLON'
+
+def p_asignacion_error(p):
+    'asignacion : ID TOASSIGN error SEMICOLON'
+    printerror("Error en la asignación")
+    printhelp("\tint a = 2;")
+
 def p_expresion_suma(p):
     'expresion : expresion PLUS expresion'
 def p_expresion_resta(p):
@@ -199,17 +218,48 @@ def p_str(p):
 
 # Error generado
 def p_error(p):
-    print(p)
-    print("Error de sintaxis:")
+    errors = True
+    pos = find_column(p.lexer.lexdata, p) 
+    line = p.lineno
+    exp = p.lexer.lexdata.split("\n")
+    exp = exp[line - 1]
+    exp = exp.strip()
+    print("Error de sintaxis en línea: {}; posisión: {}".format((line), pos))
+    print(exp)
+    print("^")
 # Construir parser
+
+def find_column(input, token):
+     line_start = input.rfind('\n', 0, token.lexpos) + 1
+     return (token.lexpos - line_start) + 1
+
+def printerror(error):
+    print("\033[91m{}\033[0m".format(error))
+
+def printhelp(help):
+    print("Help: \033[92m\n{}\033[0m".format(help))
 
 parser = sintaxis.yacc()
 
-while True:
-    try:
-        s = input('<c#>')
-    except EOFError:
-        break
-    if not s: continue
-    result = parser.parse(s)
-    print(result)
+
+def sintactico(fuente):
+    print(fuente)
+    result = parser.parse(fuente)
+    if not errors:
+        print("Codigo ejecutado con éxito")
+
+
+cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
+
+sintactico(cadena)
+
+# while True:
+#     line = 0
+#     s = ""
+#     try:
+#         s = input('<c#>')
+#     except EOFError:
+#         break
+#     if not s: continue
+#     result = parser.parse(s)
+#     print(result)
