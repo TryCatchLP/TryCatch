@@ -32,7 +32,16 @@ def p_imprimir_error(p):
 def p_metodos_void(p):
     '''metodos : remove
         | add
+        | contains
         | union'''
+
+def p_metodo_error(p):
+    '''metodos : ID error LPAREN valor RPAREN SEMICOLON
+        |  ID metodos error valor RPAREN SEMICOLON
+        | ID metodos LPAREN valor error SEMICOLON
+    '''
+    printerror("Error en el metodo")
+    printhelp("\tlista.Remove(5);\n\tlista.Add(5);\n\tlista.Contains(5);")
 
 def p_valor(p):
     '''valor : TRUE
@@ -68,6 +77,11 @@ def p_contenido_coma(p):
 def p_for(p):
     'for : FOR LPAREN inicio SEMICOLON condicion SEMICOLON iter RPAREN LLLAVE sentencias RLLAVE '
 
+def p_for_error(p):
+    'for : FOR error'
+    printerror("Error en sentencia for")
+    printhelp("\tfor(int i=0; a > b; i++){\n\t\ta--;\n\t\tConsole.WriteLine(\"a es mayor que b\");\n\t}")
+
 def p_ini_for(p):
     '''inicio : ID
         | factor
@@ -83,14 +97,27 @@ def p_incremento(p):
         | ID INCRE
         | ID PLUS TOASSIGN term
     '''
+def p_incremento_error(p):
+    'incremento : incremento error'
+    printerror("Error de incremento")
+    printhelp("\tint a=1;\n\ta++; \n\ta+=1;\n\tint b=9;\n\t++b;")
+
 def p_decremento(p):
     '''decremento : DECRE ID
         | ID DECRE
         | ID MINUS TOASSIGN term
     '''
+def p_decremento_error(p):
+    'decremento : decremento error'
+    printerror("Error de decremento")
+    printhelp("\tint a=5;\n\ta--;\n\ta-=1;\n\tint b=9;\n\t--b;")
 
 def p_while(p):
     'while : WHILE LPAREN condicion RPAREN LLLAVE sentencias RLLAVE '
+def p_while_error(p):
+    'while : WHILE error'
+    printerror("Error en sentencia while")
+    printhelp("\twhile(a > b){\n\t\ta--;\n\t\tConsole.WriteLine(\"a es mayor que b\");\n\t}")
 
 def p_else(p):
     'else : ELSE LLLAVE sentencias RLLAVE'
@@ -135,6 +162,7 @@ def p_expression_term(p):
 
 def p_expression_paren(p):
     'expresion : LPAREN expresion RPAREN'
+
 def p_compare(p):
     '''compare : LESS
         | GREATER
@@ -175,6 +203,11 @@ def p_var(p):
 def p_leer(p):
     'leer : CONSOLE READLINE LPAREN RPAREN'
 
+def p_leer_error(p):
+    'leer : CONSOLE READLINE error'
+    printerror("Error en ReadLine, sintaxis incorrecta")
+    printhelp("\tConsole.Readline();")
+
 def p_add(p):
     'add : ID ADD LPAREN valor RPAREN'
 
@@ -189,9 +222,16 @@ def p_list_remove(p):
 def p_index_list(p):
     'indexar : ID LCORCHETE INTEGER TOASSIGN RCORCHETE'
 
-
 def p_set_union(p):
     'union : ID UNION LPAREN ID RPAREN'
+
+def p_union_error(p):
+    '''union : ID error LPAREN ID RPAREN SEMICOLON
+        |  ID UNION error ID RPAREN SEMICOLON
+        | ID UNION LPAREN ID error SEMICOLON
+    '''
+    printerror("Error en el metodo UnionWith")
+    printhelp("\tconjunto1.UnionWith(conjunto2);")
 
 def p_index_str(p):
     'indexar : string LCORCHETE INTEGER RCORCHETE'
@@ -228,7 +268,7 @@ def p_error(p):
     exp = p.lexer.lexdata.split("\n")
     exp = exp[line - 1]
     exp = exp.strip()
-    print("Error de sintaxis en línea: {}; posisión: {}".format((line), pos))
+    print("\nError de sintaxis en línea: {}; posisión: {}".format((line), pos))
     print(exp)
     print("^")
 # Construir parser
@@ -253,7 +293,13 @@ def sintactico(fuente):
         print("Codigo ejecutado con éxito")
 
 
-cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
+#cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
+#cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nfor(int i=0;suma>3; i++){\n\ta = 1;\n\tsuma=2-2;\n}"
+#cadena = "suma ---;\nresta +++;"
+#cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
+#cadena="HashSet<int> conjunto2 = new HashSet<int>();\nconjunto2.Add(1);\nconjunto2.Add(3);\nconjunto.UnionWith(conjunto2);"
+#cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nlista.Remove(1);"
+cadena="Console.ReadLine();"
 
 sintactico(cadena)
 
