@@ -6,19 +6,23 @@ errors = False
 
 def p_sentencias(p):
     '''sentencias : asignacion
-    | imprimir
-    | leer
+    | imprimir SEMICOLON
+    | leer SEMICOLON
     | declaracion
     | iter SEMICOLON
     | if
-    | while
-    | for
+    | while 
+    | for 
     | condicion
-    | metodos
+    | metodos SEMICOLON
     | sentencias sentencias'''
 
+def p_sentencias_error(p):
+    'sentencias : sentencias error'
+    printerror("Error: no se encuentra el ;")
+
 def p_imprimir(p):
-    'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN SEMICOLON'
+    'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN'
 
 def p_imprimir_error(p):
     'imprimir : CONSOLE WRITELINE error'
@@ -169,10 +173,10 @@ def p_var(p):
     '''
 
 def p_leer(p):
-    'leer : CONSOLE READLINE LPAREN RPAREN SEMICOLON'
+    'leer : CONSOLE READLINE LPAREN RPAREN'
 
 def p_add(p):
-    'add : ID ADD LPAREN valor RPAREN SEMICOLON'
+    'add : ID ADD LPAREN valor RPAREN'
 
 def p_contains(p):
     '''contains : ID CONTAINS LPAREN valor RPAREN SEMICOLON
@@ -180,14 +184,14 @@ def p_contains(p):
     '''
     
 def p_list_remove(p):
-    'remove : ID REMOVE LPAREN valor RPAREN SEMICOLON'
+    'remove : ID REMOVE LPAREN valor RPAREN'
     
 def p_index_list(p):
     'indexar : ID LCORCHETE INTEGER TOASSIGN RCORCHETE'
 
 
 def p_set_union(p):
-    'union : ID UNION LPAREN ID RPAREN SEMICOLON'
+    'union : ID UNION LPAREN ID RPAREN'
 
 def p_index_str(p):
     'indexar : string LCORCHETE INTEGER RCORCHETE'
