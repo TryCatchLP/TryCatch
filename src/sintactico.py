@@ -5,7 +5,7 @@ tokens = lexico.tokens
 errors = False
 
 def p_sentencias(p):
-    '''sentencias : asignacion
+    '''sentencias : asignacion SEMICOLON
     | imprimir SEMICOLON
     | leer SEMICOLON
     | declaracion
@@ -148,6 +148,10 @@ def p_asignacion_error(p):
     'asignacion : ID TOASSIGN error SEMICOLON'
     printerror("Error en la asignación")
     printhelp("\tint a = 2;")
+
+def p_asignacion_coma_error(p):
+    'asignacion : ID TOASSIGN valor error'
+    printerror("Error se encuentra el ;")
 
 def p_expresion_suma(p):
     'expresion : expresion PLUS expresion'
@@ -298,8 +302,8 @@ def sintactico(fuente):
 #cadena = "suma ---;\nresta +++;"
 #cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
 #cadena="HashSet<int> conjunto2 = new HashSet<int>();\nconjunto2.Add(1);\nconjunto2.Add(3);\nconjunto.UnionWith(conjunto2);"
-#cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nlista.Remove(1);"
-cadena="Console.ReadLine();"
+cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nlista.Remove(1);"
+#cadena="Console.ReadLine();"
 
 sintactico(cadena)
 
