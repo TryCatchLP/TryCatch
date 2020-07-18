@@ -5,35 +5,37 @@ tokens = lexico.tokens
 errors = False
 
 def p_sentencias(p):
-    '''sentencias : asignacion SEMICOLON
-    | imprimir SEMICOLON
-    | leer SEMICOLON
+    '''sentencias : asignacion
+    | imprimir
+    | leer
     | declaracion
     | iter SEMICOLON
     | if
     | while 
     | for 
     | condicion
-    | metodos SEMICOLON
+    | metodos
     | sentencias sentencias'''
 
-def p_sentencias_error(p):
+""" def p_sentencias_error(p):
     'sentencias : sentencias error'
-    printerror("Error: no se encuentra el ;")
+    line   = p.lineno(1)
+    index  = p.lexpos(1)
+    printerror("Error: no se encuentra el ;") """
 
 def p_imprimir(p):
-    'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN'
+    'imprimir : CONSOLE WRITELINE LPAREN valor RPAREN SEMICOLON'
 
 def p_imprimir_error(p):
-    'imprimir : CONSOLE WRITELINE error'
+    'imprimir : CONSOLE WRITELINE error SEMICOLON'
     printerror("Error en WriteLine, sintaxis incorrecta")
     printhelp("\tConsole.WriteLine(\"!Hola Mundo!\");")
 
 def p_metodos_void(p):
-    '''metodos : remove
-        | add
-        | contains
-        | union'''
+    '''metodos : remove SEMICOLON
+        | add SEMICOLON
+        | contains SEMICOLON
+        | union SEMICOLON'''
 
 def p_metodo_error(p):
     '''metodos : ID error LPAREN valor RPAREN SEMICOLON
@@ -147,11 +149,11 @@ def p_asignacion(p):
 def p_asignacion_error(p):
     'asignacion : ID TOASSIGN error SEMICOLON'
     printerror("Error en la asignación")
-    printhelp("\tint a = 2;")
+    printhelp("\tint a = 2;\n\tfloat a = 2.5f;\n\tbool a = true;")
 
-def p_asignacion_coma_error(p):
+""" def p_asignacion_coma_error(p):
     'asignacion : ID TOASSIGN valor error'
-    printerror("Error se encuentra el ;")
+    printerror("Error se encuentra el ;") """
 
 def p_expresion_suma(p):
     'expresion : expresion PLUS expresion'
@@ -203,9 +205,13 @@ def p_var(p):
     '''factor : VAR ID TOASSIGN INTEGER
         | VAR ID TOASSIGN DECIMAL
     '''
+def p_fact_init(p):
+    '''factor : ID TOASSIGN INTEGER
+        | ID TOASSIGN DECIMAL
+    '''
 
 def p_leer(p):
-    'leer : CONSOLE READLINE LPAREN RPAREN'
+    'leer : CONSOLE READLINE LPAREN RPAREN SEMICOLON'
 
 def p_leer_error(p):
     'leer : CONSOLE READLINE error'
@@ -216,7 +222,7 @@ def p_add(p):
     'add : ID ADD LPAREN valor RPAREN'
 
 def p_contains(p):
-    '''contains : ID CONTAINS LPAREN valor RPAREN SEMICOLON
+    '''contains : ID CONTAINS LPAREN valor RPAREN
         | string CONTAINS LPAREN string RPAREN
     '''
     
@@ -266,15 +272,19 @@ def p_str(p):
 
 # Error generado
 def p_error(p):
+    global errors
     errors = True
-    pos = find_column(p.lexer.lexdata, p) 
-    line = p.lineno
-    exp = p.lexer.lexdata.split("\n")
-    exp = exp[line - 1]
-    exp = exp.strip()
-    print("\nError de sintaxis en línea: {}; posisión: {}".format((line), pos))
-    print(exp)
-    print("^")
+    if p != None:
+        pos = find_column(p.lexer.lexdata, p) 
+        line = p.lineno
+        exp = p.lexer.lexdata.split("\n")
+        exp = exp[line - 1]
+        exp = exp.strip()
+        print("\nError de sintaxis en línea: {}; posisión: {}".format((line), pos))
+        print(exp)
+        print("^")
+    else:
+        print("Unexpected end of input")
 # Construir parser
 
 def find_column(input, token):
@@ -298,11 +308,11 @@ def sintactico(fuente):
 
 
 #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
-#cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nfor(int i=0;suma>3; i++){\n\ta = 1;\n\tsuma=2-2;\n}"
+#cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nfor(i=0; suma>3; i++){\n\ta = 1;\n\tsuma=2-2;\n}"
 #cadena = "suma ---;\nresta +++;"
 #cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
 #cadena="HashSet<int> conjunto2 = new HashSet<int>();\nconjunto2.Add(1);\nconjunto2.Add(3);\nconjunto.UnionWith(conjunto2);"
-cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nlista.Remove(1);"
+cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nbool c = lista.Contains(3);\nlista.Remove(1);"
 #cadena="Console.ReadLine();"
 
 sintactico(cadena)
