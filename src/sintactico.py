@@ -230,7 +230,7 @@ def p_list_remove(p):
     'remove : ID REMOVE LPAREN valor RPAREN'
     
 def p_index_list(p):
-    'indexar : ID LCORCHETE INTEGER TOASSIGN RCORCHETE'
+    'indexar : ID LCORCHETE INTEGER RCORCHETE'
 
 def p_set_union(p):
     'union : ID UNION LPAREN ID RPAREN'
@@ -315,7 +315,22 @@ def sintactico(fuente):
 cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nbool c = lista.Contains(3);\nlista.Remove(1);"
 #cadena="Console.ReadLine();"
 
-sintactico(cadena)
+# ============================ Kenny Camba ===============================
+
+# Operación compleja con asignación
+cadena1 = "int b = 1; \nvar a = 2 + 5.2f * (3*b)/b-5;\nConsole.WriteLine(a);" 
+sintactico(cadena1)
+
+print()
+
+# Declaracion de una lista, uso de un ciclo while, que tiene una condición compuesta, adentro de este se hace un incremento, agragamiento a la lista y un if para presentat el primer elemento de la lista
+cadena2 = "var lista = new List<int>();\nint a = 2;\nwhile(a > 5 && a != 10 || a+1>3){\n\ta++;\n\tlista.Add(a);\n\tif(a==8){\n\t\tConsole.WriteLine(lista[0]);\n\t}\n}"
+sintactico(cadena2)
+
+print()
+# Asignación de variables y inicialización de tupla con los valores de esta.
+cadena3 = "int edad = 21;\nstring nombre = \"Kenny\";\nvar tupla = (nombre: nombre, edad: edad);\nConsole.WriteLine(tupla.edad + 1);"
+sintactico(cadena3)
 
 # while True:
 #     line = 0
