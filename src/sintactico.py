@@ -230,7 +230,7 @@ def p_list_remove(p):
     'remove : ID REMOVE LPAREN valor RPAREN'
     
 def p_index_list(p):
-    'indexar : ID LCORCHETE INTEGER TOASSIGN RCORCHETE'
+    'indexar : ID LCORCHETE INTEGER RCORCHETE'
 
 def p_set_union(p):
     'union : ID UNION LPAREN ID RPAREN'
@@ -309,25 +309,28 @@ def sintactico(fuente):
 
 #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
 #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nfor(i=0; suma>3; i++){\n\ta = 1;\n\tsuma=2-2;\n}"
+#cadena = "suma ---;\nresta +++;"
 #cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
 #cadena="HashSet<int> conjunto2 = new HashSet<int>();\nconjunto2.Add(1);\nconjunto2.Add(3);\nconjunto.UnionWith(conjunto2);"
-#cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nbool c = lista.Contains(3);\nlista.Remove(1);"
+cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nbool c = lista.Contains(3);\nlista.Remove(1);"
 #cadena="Console.ReadLine();"
-#sintactico(cadena)
-#========================Yuleixi Garcia=============================
-#declaracion de una lista y uso de sus metodos
-cadena1= "List<int> lista = new List<int>();\nlista.Add(456);\nlista.Contains(1);\nlista.Remove(2);"
-#declaracion de un HashSet y uso de sus metodos
-cadena2="HashSet<int> set= new HashSet<int>();\nset.Add(456);\nset.UnionWith(conjunto);"
-#uso de incrementadores y decrementadores
-cadena3= "int numero = 6;\nnumero--;\nnumero ++;\n++numero;\n--numero;\nnumero+=2;\nnumero-=1;"
-sintactico(cadena1)
-print(20*"-")
-sintactico(cadena2)
-print(20*"-")
-sintactico(cadena3)
-print(20*"-")
 
+# ============================ Kenny Camba ===============================
+
+# Operación compleja con asignación
+cadena1 = "int b = 1; \nvar a = 2 + 5.2f * (3*b)/b-5;\nConsole.WriteLine(a);" 
+sintactico(cadena1)
+
+print()
+
+# Declaracion de una lista, uso de un ciclo while, que tiene una condición compuesta, adentro de este se hace un incremento, agragamiento a la lista y un if para presentat el primer elemento de la lista
+cadena2 = "var lista = new List<int>();\nint a = 2;\nwhile(a > 5 && a != 10 || a+1>3){\n\ta++;\n\tlista.Add(a);\n\tif(a==8){\n\t\tConsole.WriteLine(lista[0]);\n\t}\n}"
+sintactico(cadena2)
+
+print()
+# Asignación de variables y inicialización de tupla con los valores de esta.
+cadena3 = "int edad = 21;\nstring nombre = \"Kenny\";\nvar tupla = (nombre: nombre, edad: edad);\nConsole.WriteLine(tupla.edad + 1);"
+sintactico(cadena3)
 
 # while True:
 #     line = 0
