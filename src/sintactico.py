@@ -312,7 +312,7 @@ def sintactico(fuente):
 #cadena = "suma ---;\nresta +++;"
 #cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
 #cadena="HashSet<int> conjunto2 = new HashSet<int>();\nconjunto2.Add(1);\nconjunto2.Add(3);\nconjunto.UnionWith(conjunto2);"
-cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nbool c = lista.Contains(3);\nlista.Remove(1);"
+#cadena="List<int>lista = new List<int>();\nlista.Add(1);\nlista.Add(3);\nlista.Add(7);\nbool c = lista.Contains(3);\nlista.Remove(1);"
 #cadena="Console.ReadLine();"
 
 # ============================ Kenny Camba ===============================
@@ -331,6 +331,25 @@ print()
 # Asignación de variables y inicialización de tupla con los valores de esta.
 cadena3 = "int edad = 21;\nstring nombre = \"Kenny\";\nvar tupla = (nombre: nombre, edad: edad);\nConsole.WriteLine(tupla.edad + 1);"
 sintactico(cadena3)
+
+#========================Yuleixi Garcia=============================
+
+print()
+#asignacion de variable, uso de if mediante una comparacion de la variable, impesion de un string y pedida de ingreso por consola
+cadena1= "int edad = 21;\nif(edad>=18){\n\tConsole.WriteLine(\"Ingrese su nombre: \");\n\tConsole.ReadLine();\n}"
+sintactico(cadena1)
+
+print()
+#declaracion de dos HashSet, agregacion de datos a los ocnjuntos y realizar la operacion union entre ambbos conjuntos
+cadena2="HashSet<int> set= new HashSet<int>();\nset.Add(456);\nset.Add(345);\nset.Add(42);\nHashSet<int> cojunto= new HashSet<int>();\nset.Add(456);\nset.UnionWith(conjunto);"
+sintactico(cadena2)
+
+print()
+#uso de incrementadores y decrementadores
+cadena3= "int numero = 6;\nnumero--;\nnumero ++;\n++numero;\n--numero;\nnumero+=2;\nnumero-=1;"
+sintactico(cadena3)
+
+print()
 
 # while True:
 #     line = 0
