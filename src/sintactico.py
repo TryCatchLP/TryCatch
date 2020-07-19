@@ -349,7 +349,22 @@ print()
 cadena3= "int numero = 6;\nnumero--;\nnumero ++;\n++numero;\n--numero;\nnumero+=2;\nnumero-=1;"
 sintactico(cadena3)
 
+# ============================ Steven Araujo ===============================
+
 print()
+# declaracion de tupla e impresion de un item
+cadena1 = "var tupla = ('Steven', 'Araujo');\nConsole.WriteLine(tupla.Item1);"
+sintactico(cadena1)
+
+print()
+# declaracion de un string y validacion de contenido de un subconjunto en el string 
+cadena2 = 'string nombre_completo = "Steven Araujo";\nbool apellido = nombre_completo.Contains("Araujo");\nConsole.WriteLine(apellido);'
+sintactico(cadena2)
+
+print()
+# uso de while con decrementador
+cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
+sintactico(cadena3)
 
 # while True:
 #     line = 0
