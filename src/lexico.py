@@ -1,5 +1,7 @@
 import ply.lex as lex
 
+output = []
+
 reserved = {
     'var': 'VAR',
     'string': 'STRING',
@@ -111,17 +113,23 @@ def t_ID(t):
     return t
 
 def t_error(t):
+    global output
     print("No se ha reconocido '%s'" % t.value[0])
+    output.append("No se ha reconocido '%s'" % t.value[0])
     t.lexer.skip(1)
 
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += 1
 
-lex.lex()
+analizador = lex.lex()
 
 def analizar(cadena):
-    analizador = lex.lex()
+    global output
+    output = []
+    analizador.lineno = 0
+    analizador.lexpos = 0
+
     analizador.input(cadena)
 
     while True:
@@ -129,6 +137,8 @@ def analizar(cadena):
         if not tok:
             break
         print(tok)
+        output.append(tok)
+    return output
 
 """ #========================Steven Araujo=============================
 cadena1 = "var tupla = ('Steven', 'Araujo');\nConsole.WriteLine(tupla.Item1);"

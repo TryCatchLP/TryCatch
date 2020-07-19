@@ -3,6 +3,8 @@ import lexico
 tokens = lexico.tokens
 
 errors = False
+output = []
+
 
 def p_sentencias(p):
     '''sentencias : asignacion
@@ -274,6 +276,7 @@ def p_str(p):
 def p_error(p):
     global errors
     errors = True
+    global output
     if p != None:
         pos = find_column(p.lexer.lexdata, p) 
         line = p.lineno
@@ -282,9 +285,13 @@ def p_error(p):
         exp = exp.strip()
         print("\nError de sintaxis en línea: {}; posisión: {}".format((line), pos))
         print(exp)
-        print("^")
+        print((pos*" ") + "^")
+        output.append("\nError de sintaxis en línea: {}; posisión: {}".format((line), pos))
+        output.append(exp)
+        output.append((pos*" ") + "^")
     else:
         print("Unexpected end of input")
+        output.append("Unexpected end of input")
 # Construir parser
 
 def find_column(input, token):
@@ -292,22 +299,34 @@ def find_column(input, token):
      return (token.lexpos - line_start) + 1
 
 def printerror(error):
+    global output
     print("\033[91m{}\033[0m".format(error))
+    output.append(error)
 
 def printhelp(help):
+    global output
     print("Help: \033[92m\n{}\033[0m".format(help))
+    output.append("Help:\n{}".format(help))
+
 
 parser = sintaxis.yacc()
 
 
 def sintactico(fuente):
     print(fuente)
+    lexico.analizador.lineno = 0
+    lexico.analizador.lexpos = 0
+    global output, errors
+    output = []
+    errors = False
     result = parser.parse(fuente)
     if not errors:
         print("Codigo ejecutado con éxito")
+        output.append("Codigo ejecutado con éxito")
+    return output
 
 
-#cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
+""" #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
 #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nfor(i=0; suma>3; i++){\n\ta = 1;\n\tsuma=2-2;\n}"
 #cadena = "suma ---;\nresta +++;"
 #cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
@@ -365,7 +384,7 @@ print()
 # uso de while con decrementador
 cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
 sintactico(cadena3)
-
+ """
 # while True:
 #     line = 0
 #     s = ""

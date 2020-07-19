@@ -8,14 +8,23 @@ ventana.geometry("1100x400")
 
 def input_Lexico():
     texto= cajaTexto1.get("1.0",END)
-    lexico.analizar(texto)
+    out = lexico.analizar(texto)
+    output(out)
 
 def input_Sintactico():
     texto= cajaTexto1.get("1.0",END)
-    sintactico.sintactico(texto)
+    out = sintactico.sintactico(texto)
+    output(out)
+
+def output(data):
+    cajaTexto2.delete(1.0, END)
+    for i in range(len(data)):
+        line = data[i]
+        cajaTexto2.insert(str(i) + ".0", str(line) + "\n")        
 
 def borrar():
     cajaTexto1.delete(1.0, END)
+    cajaTexto2.delete(1.0, END)
 
 etiqueta1= Label(ventana, text="Ingresa tu codigo aqui").place(relx=0.009, rely=0.05)
 cajaTexto1 = Text(ventana,height=10, width=30)
