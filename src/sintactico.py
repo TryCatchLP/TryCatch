@@ -212,8 +212,10 @@ def p_fact_init(p):
         | ID TOASSIGN DECIMAL
     '''
 
+#==============================================================================================================================
 def p_leer(p):
-    'leer : CONSOLE READLINE LPAREN RPAREN SEMICOLON'
+    '''leer : tipo ID TOASSIGN CONSOLE READLINE LPAREN RPAREN SEMICOLON
+    | ID TOASSIGN CONSOLE READLINE LPAREN RPAREN SEMICOLON'''
 
 def p_leer_error(p):
     'leer : CONSOLE READLINE error'
@@ -262,8 +264,10 @@ def p_string(p):
 def p_string_replace(p):
     'replace : string REPLACE LPAREN string COMMA string RPAREN'
 
+#==============================================================================================================================
 def p_string_sub(p):
-    'substring : string SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN'
+    '''substring : string SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN
+    | ID SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN'''
 
 def p_str(p):
     '''str : replace
@@ -326,7 +330,7 @@ def sintactico(fuente):
     return output
 
 
-""" #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
+#cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nif(suma>3){\n\ta = 1;\n\tsuma=2-2;\n}"
 #cadena = "var a = 2.5f;\nfloat suma = a + 1;\nConsole.WriteLine(a);\nfor(i=0; suma>3; i++){\n\ta = 1;\n\tsuma=2-2;\n}"
 #cadena = "suma ---;\nresta +++;"
 #cadena = "var a = 2.5f;\nfloat suma = a -* 1;"
@@ -355,7 +359,8 @@ sintactico(cadena3)
 
 print()
 #asignacion de variable, uso de if mediante una comparacion de la variable, impesion de un string y pedida de ingreso por consola
-cadena1= "int edad = 21;\nif(edad>=18){\n\tConsole.WriteLine(\"Ingrese su nombre: \");\n\tConsole.ReadLine();\n}"
+#======================================================================================================================================
+cadena1= "int edad = 21;\nif(edad>=18){\n\tConsole.WriteLine(\"Ingrese su nombre: \");\n\tstring nombre = Console.ReadLine();\n}"
 sintactico(cadena1)
 
 print()
@@ -384,7 +389,12 @@ print()
 # uso de while con decrementador
 cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
 sintactico(cadena3)
- """
+
+print()
+# uso de while con decrementador
+cadena4 = 'string nombre_completo = "Steven Araujo";\nstring apellido = nombre_completo.Substring(7, 6);\nConsole.WriteLine(apellido);'
+sintactico(cadena4)
+
 # while True:
 #     line = 0
 #     s = ""
