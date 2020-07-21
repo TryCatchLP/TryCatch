@@ -261,10 +261,11 @@ def p_string(p):
         | DSTRING
     '''
 
-def p_string_replace(p):
-    'replace : string REPLACE LPAREN string COMMA string RPAREN'
-
 #==============================================================================================================================
+def p_string_replace(p):
+    '''replace : string REPLACE LPAREN string COMMA string RPAREN
+    | ID REPLACE LPAREN string COMMA string RPAREN'''
+
 def p_string_sub(p):
     '''substring : string SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN
     | ID SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN'''
@@ -391,9 +392,14 @@ cadena3 = 'int contador = 5;\nwhile(contador >= 5){\n\tcontador--;\n}'
 sintactico(cadena3)
 
 print()
-# uso de while con decrementador
+# uso de Substring
 cadena4 = 'string nombre_completo = "Steven Araujo";\nstring apellido = nombre_completo.Substring(7, 6);\nConsole.WriteLine(apellido);'
 sintactico(cadena4)
+
+print()
+# uso de Replace
+cadena5 = 'string nombre_completo = "Steven Araujo";\nstring resultado = nombre_completo.Replace("Araujo", "Moran");\nConsole.WriteLine(resultado);'
+sintactico(cadena5)
 
 # while True:
 #     line = 0
