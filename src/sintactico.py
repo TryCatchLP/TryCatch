@@ -287,7 +287,12 @@ def p_error(p):
         line = p.lineno
         exp = p.lexer.lexdata.split("\n")
         if line > 0:
-            exp = exp[line - 1]
+            if not isSemiError(exp, line, p.value):
+                exp = exp[line - 1]
+            else:
+                exp = exp[line - 2]
+                line -= 1
+                printerror("Debe colocar ; al final de una instrucción")
         else:
             exp = exp[line]
             line += 1
@@ -299,9 +304,17 @@ def p_error(p):
         output.append(exp)
         output.append((pos*" ") + "^")
     else:
-        print("Unexpected end of input")
-        output.append("Unexpected end of input")
+        print("Error en la útima línea")
+        output.append("Error en la útima línea")
 # Construir parser
+
+def isSemiError(data: list, line: int, value: str):
+    if line > 1:
+        text = data[line-1]
+        dat = text.index(value)
+        if dat == 0 and data[line-2][-1] != ';':
+            return True
+    return False
 
 def find_column(input, token):
      line_start = input.rfind('\n', 0, token.lexpos) + 1
@@ -323,7 +336,7 @@ parser = sintaxis.yacc()
 
 def sintactico(fuente):
     print(fuente)
-    lexico.analizador.lineno = 0
+    lexico.analizador.lineno = 1
     lexico.analizador.lexpos = 0
     global output, errors
     output = []

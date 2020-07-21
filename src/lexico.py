@@ -127,7 +127,7 @@ analizador = lex.lex()
 def analizar(cadena):
     global output
     output = []
-    analizador.lineno = 0
+    analizador.lineno = 1
     analizador.lexpos = 0
 
     analizador.input(cadena)
