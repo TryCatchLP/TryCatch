@@ -180,6 +180,7 @@ def p_compare(p):
         | LESSEQUAL'''
 def p_condicion(p):
     '''condicion : expresion compare expresion
+        | ID
         | TRUE
         | FALSE
     '''
