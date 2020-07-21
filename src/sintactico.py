@@ -59,7 +59,7 @@ def p_valor(p):
     
 def p_if(p):
     '''if : IF LPAREN condicion RPAREN LLLAVE sentencias RLLAVE
-    | IF LPAREN condicion LPAREN LLLAVE sentencias RLLAVE else'''
+    | IF LPAREN condicion RPAREN LLLAVE sentencias RLLAVE else'''
 
 def p_if_error(p):
     'if : IF error'
@@ -188,6 +188,12 @@ def p_condicion_oper(p):
         | condicion AND condicion
         | condicion OR condicion
         | LPAREN condicion RPAREN
+        | condicion DEQUALS TRUE
+        | condicion NOTEQUALS TRUE
+        | condicion DEQUALS FALSE
+        | condicion NOTEQUALS FALSE
+        | condicion DEQUALS condicion
+        | condicion NOTEQUALS condicion
     '''
 
 def p_term_factor(p):
@@ -212,7 +218,6 @@ def p_fact_init(p):
         | ID TOASSIGN DECIMAL
     '''
 
-#==============================================================================================================================
 def p_leer(p):
     '''leer : tipo ID TOASSIGN CONSOLE READLINE LPAREN RPAREN SEMICOLON
     | ID TOASSIGN CONSOLE READLINE LPAREN RPAREN SEMICOLON'''
@@ -234,21 +239,24 @@ def p_list_remove(p):
     'remove : ID REMOVE LPAREN valor RPAREN'
     
 def p_index_list(p):
-    'indexar : ID LCORCHETE INTEGER RCORCHETE'
+    '''indexar : ID LCORCHETE INTEGER RCORCHETE
+    | ID LCORCHETE expresion RCORCHETE
+    '''
 
 def p_set_union(p):
     'union : ID UNION LPAREN ID RPAREN'
 
 def p_union_error(p):
-    '''union : ID error LPAREN ID RPAREN SEMICOLON
-        |  ID UNION error ID RPAREN SEMICOLON
+    '''union : ID UNION error ID RPAREN SEMICOLON
         | ID UNION LPAREN ID error SEMICOLON
     '''
     printerror("Error en el metodo UnionWith")
     printhelp("\tconjunto1.UnionWith(conjunto2);")
 
 def p_index_str(p):
-    'indexar : string LCORCHETE INTEGER RCORCHETE'
+    '''indexar : string LCORCHETE INTEGER RCORCHETE
+    | string LCORCHETE expresion RCORCHETE
+    '''
    
 def p_tupla_item(p):
     'item : ID ITEM'
@@ -261,21 +269,19 @@ def p_string(p):
         | DSTRING
     '''
 
-#==============================================================================================================================
 def p_string_replace(p):
     '''replace : string REPLACE LPAREN string COMMA string RPAREN
     | ID REPLACE LPAREN string COMMA string RPAREN'''
 
 def p_string_sub(p):
-    '''substring : string SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN
-    | ID SUBSTRING LPAREN INTEGER COMMA INTEGER RPAREN'''
+    '''substring : string SUBSTRING LPAREN expresion COMMA expresion RPAREN
+    | ID SUBSTRING LPAREN expresion COMMA expresion RPAREN'''
 
 def p_str(p):
     '''str : replace
         | contains
         | substring
     '''
-
 
 # Error generado
 def p_error(p):
@@ -377,7 +383,6 @@ sintactico(cadena3)
 
 print()
 #asignacion de variable, uso de if mediante una comparacion de la variable, impesion de un string y pedida de ingreso por consola
-#======================================================================================================================================
 cadena1= "int edad = 21;\nif(edad>=18){\n\tConsole.WriteLine(\"Ingrese su nombre: \");\n\tstring nombre = Console.ReadLine();\n}"
 sintactico(cadena1)
 
