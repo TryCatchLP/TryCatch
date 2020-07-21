@@ -286,7 +286,11 @@ def p_error(p):
         pos = find_column(p.lexer.lexdata, p) 
         line = p.lineno
         exp = p.lexer.lexdata.split("\n")
-        exp = exp[line - 1]
+        if line > 0:
+            exp = exp[line - 1]
+        else:
+            exp = exp[line]
+            line += 1
         exp = exp.strip()
         print("\nError de sintaxis en línea: {}; posisión: {}".format((line), pos))
         print(exp)

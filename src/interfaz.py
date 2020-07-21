@@ -20,7 +20,7 @@ def output(data):
     cajaTexto2.delete(1.0, END)
     for i in range(len(data)):
         line = data[i]
-        cajaTexto2.insert(str(i) + ".0", str(line) + "\n")        
+        cajaTexto2.insert(str(i+1) + ".0", str(line) + "\n")        
 
 def borrar():
     cajaTexto1.delete(1.0, END)
