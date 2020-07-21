@@ -316,12 +316,15 @@ def p_error(p):
 # Construir parser
 
 def isSemiError(data: list, line: int, value: str):
-    if line > 1:
-        text = data[line-1]
-        dat = text.index(value)
-        if dat == 0 and data[line-2][-1] != ';':
-            return True
-    return False
+    try:
+        if line > 1:
+            text = data[line-1]
+            dat = text.index(value)
+            if dat == 0 and data[line-2][-1] != ';':
+                return True
+        return False
+    except:
+        return False
 
 def find_column(input, token):
      line_start = input.rfind('\n', 0, token.lexpos) + 1
