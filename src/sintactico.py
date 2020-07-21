@@ -53,7 +53,7 @@ def p_valor(p):
         | str
         | string
         | NEW coleccion LESS tipo GREATER LPAREN RPAREN
-        | ID GETRANGE LPAREN INTEGER COMMA INTEGER RPAREN
+        | ID GETRANGE LPAREN expresion COMMA expresion RPAREN
         | tupla
         | expresion'''
     
